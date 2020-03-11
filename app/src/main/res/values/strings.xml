@@ -21,4 +21,6 @@
     <string name="user_name">User Name</string>
     <string name="open">Open</string>
     <string name="clear">Clear</string>
+    <string name="ver_balanco">Ver Balanço</string>
+    <string name="balanco">Balanço:</string>
 </resources>

@@ -1,11 +1,12 @@
 package com.example.financas.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financas.R
 import com.example.financas.entity.MovimentEntity
 import com.example.financas.enums.MovimentType
-import com.example.financas.extensions.getResume
 import com.example.financas.extensions.getValue
 import com.example.financas.extensions.isNotEmpty
 import com.example.financas.extensions.toast
@@ -16,18 +17,21 @@ class MainActivity : AppCompatActivity() {
 
     private val storage by lazy { FinancasStorage(this) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         init()
     }
 
     private fun init() {
-        loadResume()
         buttonSave.setOnClickListener { save() }
         buttonClear.setOnClickListener { storage.clearMoviments() }
+        buttonBalance.setOnClickListener {
+            startActivityForResult(
+                BalanceActivity.newIntent(MainActivity@ this),
+                BalanceActivity.REQ_CODE
+            )
+        }
     }
 
     private fun save() {
@@ -44,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 toast(R.string.Movimento_adction_secess)
             }
         }
-        loadResume()
         clear()
     }
 
@@ -74,7 +77,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun loadResume() {
-        textResume.text = storage.getMoviments()?.getResume()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                BalanceActivity.REQ_CODE -> {
+                    val moviment = data?.getSerializableExtra(BalanceActivity.RESULT_DATA) as MovimentEntity
+                    editName.setText(moviment.name)
+                    editDescription.setText(moviment.description)
+                    editType.setText(moviment.type.name)
+                    editValue.setText(moviment.value.toString())
+                }
+            }
+        }
     }
 }
