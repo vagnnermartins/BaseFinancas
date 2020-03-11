@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Finanças</string>
+    <string name="insira_nome">Nome da loja*</string>
+    <string name="insira_description">Insira uma descrição</string>
+    <string name="insira_IN_OUT"> IN ou OUT*</string>
+    <string name="Insira_text_maior_0">Insira um valor*</string>
+    <string name="Movimento_adction_secess">Movimento adicionado com sucesso</string>
+    <string name="name_comp">Nome:</string>
+    <string name="description">Descrição:</string>
+    <string name="type">Tipo:</string>
+    <string name="vouler">Valor:</string>
+    <string name="totalit">TOTAL:</string>
+    <string name="obrigation">* Campos obrigatórios </string>
+    <string name="register">Rgistrar</string>
+    <string name="consult">Consultar</string>
+    <string name="insira_dados_corretamente">Insira os dados corretamente</string>
+    <string name="insira_o_nome_da_loja">Insira o nome da loja</string>
+    <string name="insira_uma_descri_o_da_compra">Insira uma descrição da compra</string>
+    <string name="insira_um_tipo_de_movimento_in_ou_out">Insira um tipo de movimento: IN ou OUT</string>
+    <string name="insira_um_valor_maior_que_zero">Insira um valor maior que zero</string>
+    <string name="user_name">User Name</string>
+    <string name="open">Open</string>
+    <string name="clear">Clear</string>
+</resources>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rount_tv"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context=".activity.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editName"
+                style="@style/mCustumText"
+                android:layout_width="350dp"
+                android:autofillHints=""
+                android:gravity="center"
+                android:hint="@string/insira_nome"
+                android:textColor="@android:color/holo_blue_dark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewInsiraNomeLoja"
+                style="@style/mCustumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rount_tv"
+                android:gravity="center"
+                android:text="@string/insira_o_nome_da_loja"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editName" />
+
+            <EditText
+                android:id="@+id/editDescription"
+                style="@style/mCustumText"
+                android:layout_width="350dp"
+                android:gravity="center"
+                android:hint="@string/insira_description"
+                android:textColor="@android:color/holo_green_dark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewInsiraNomeLoja" />
+
+            <TextView
+                android:id="@+id/textViewInsiraDescricaoCompra"
+                style="@style/mCustumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rount_tv"
+                android:gravity="center"
+                android:text="@string/insira_uma_descri_o_da_compra"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editDescription" />
+
+            <EditText
+                android:id="@+id/editType"
+                style="@style/mCustumText"
+                android:layout_width="350dp"
+                android:gravity="center"
+                android:hint="@string/insira_IN_OUT"
+                android:textColor="@android:color/holo_orange_dark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewInsiraDescricaoCompra" />
+
+            <TextView
+                android:id="@+id/textViewInsiraINorOUT"
+                style="@style/mCustumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rount_tv"
+                android:gravity="center"
+                android:text="@string/insira_um_tipo_de_movimento_in_ou_out"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editType" />
+
+            <EditText
+                android:id="@+id/editValue"
+                style="@style/mCustumText"
+                android:layout_width="350dp"
+                android:gravity="center"
+                android:hint="@string/Insira_text_maior_0"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewInsiraINorOUT" />
+
+            <TextView
+                android:id="@+id/textViewValorMaioZero"
+                style="@style/mCustumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rount_tv"
+                android:gravity="center"
+                android:text="@string/insira_um_valor_maior_que_zero"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editValue" />
+
+            <TextView
+                android:id="@+id/editObrigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/obrigation"
+                android:textColorLink="@android:color/holo_red_light"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewValorMaioZero" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="60dp"
+                android:text="@string/register"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editObrigation" />
+
+
+            <Button
+                android:id="@+id/buttonClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="60dp"
+                android:text="@string/clear"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editObrigation" />
+
+
+            <TextView
+                android:id="@+id/textResume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/buttonClear" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
