@@ -25,6 +25,10 @@
                 android:autofillHints=""
                 android:gravity="center"
                 android:hint="@string/insira_nome"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:nextFocusForward="@id/editDescription"
                 android:textColor="@android:color/holo_blue_dark"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -49,6 +53,10 @@
                 android:layout_width="350dp"
                 android:gravity="center"
                 android:hint="@string/insira_description"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:nextFocusForward="@id/editValue"
                 android:textColor="@android:color/holo_green_dark"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -67,39 +75,19 @@
                 app:layout_constraintTop_toBottomOf="@id/editDescription" />
 
             <EditText
-                android:id="@+id/editType"
-                style="@style/mCustumText"
-                android:layout_width="350dp"
-                android:gravity="center"
-                android:hint="@string/insira_IN_OUT"
-                android:textColor="@android:color/holo_orange_dark"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewInsiraDescricaoCompra" />
-
-            <TextView
-                android:id="@+id/textViewInsiraINorOUT"
-                style="@style/mCustumTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rount_tv"
-                android:gravity="center"
-                android:text="@string/insira_um_tipo_de_movimento_in_ou_out"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editType" />
-
-            <EditText
                 android:id="@+id/editValue"
                 style="@style/mCustumText"
                 android:layout_width="350dp"
                 android:gravity="center"
                 android:hint="@string/Insira_text_maior_0"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:nextFocusForward="@id/editType"
                 android:textColor="@android:color/holo_red_light"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewInsiraINorOUT" />
+                app:layout_constraintTop_toBottomOf="@id/textViewInsiraDescricaoCompra" />
 
             <TextView
                 android:id="@+id/textViewValorMaioZero"
@@ -113,6 +101,29 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editValue" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/editType"
+                style="@style/mCustumText"
+                android:layout_width="350dp"
+                android:gravity="center"
+                android:text="@string/insert_moviment_type"
+                android:textColor="@android:color/holo_orange_dark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewValorMaioZero" />
+
+            <TextView
+                android:id="@+id/textViewInsiraINorOUT"
+                style="@style/mCustumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rount_tv"
+                android:gravity="center"
+                android:text="@string/insira_um_tipo_de_movimento_in_ou_out"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editType" />
+
             <TextView
                 android:id="@+id/editObrigation"
                 android:layout_width="wrap_content"
@@ -122,7 +133,7 @@
                 android:textColorLink="@android:color/holo_red_light"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewValorMaioZero" />
+                app:layout_constraintTop_toBottomOf="@id/textViewInsiraINorOUT" />
 
             <Button
                 android:id="@+id/buttonSave"

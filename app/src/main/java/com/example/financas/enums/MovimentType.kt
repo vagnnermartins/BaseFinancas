@@ -1,6 +1,8 @@
 package com.example.financas.enums
 
-enum class MovimentType(val value: String) {
-    IN("Entrada"),
-    OUT("Saída")
+import com.example.financas.R
+
+enum class MovimentType(val value: String, val image: Int) {
+    IN("Entrada", R.drawable.ic_in),
+    OUT("Saída", R.drawable.ic_out)
 }

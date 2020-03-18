@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financas.R
@@ -20,6 +20,15 @@ class BalanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance)
+        init()
+    }
+
+    private fun init() {
+        // Substituimos o Action Bar pelo Toolbar
+        setSupportActionBar(toolbar)
+        // Habilitamos o Menu Voltar no Toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         storage.getMoviments()?.let {
             balance.text = storage.getMoviments()?.getResume()
@@ -35,7 +44,13 @@ class BalanceActivity : AppCompatActivity() {
         } ?: run {
             //TODO EXIBIR MENSAGEM DE SEM MOVIMENTOS
         }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

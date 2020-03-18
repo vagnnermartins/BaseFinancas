@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
     android:foreground="?selectableItemBackground"
-    >
+    android:padding="@dimen/default_margin">
 
     <View
         android:id="@+id/viewType"
@@ -21,7 +20,7 @@
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/default_margin"
         android:textSize="25sp"
         app:layout_constraintStart_toEndOf="@id/viewType"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +30,7 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/default_margin"
         app:layout_constraintStart_toEndOf="@id/viewType"
         app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Compra Mensal de Casa" />
@@ -40,7 +39,7 @@
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/default_margin"
         app:layout_constraintStart_toEndOf="@id/viewType"
         app:layout_constraintTop_toBottomOf="@id/description"
         tools:text="12,00 €" />

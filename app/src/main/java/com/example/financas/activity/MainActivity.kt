@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financas.R
+import com.example.financas.bottomsheet.MovimentTypeDialog
 import com.example.financas.entity.MovimentEntity
 import com.example.financas.enums.MovimentType
 import com.example.financas.extensions.getValue
@@ -13,7 +14,9 @@ import com.example.financas.extensions.toast
 import com.example.financas.storage.FinancasStorage
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MovimentTypeDialog.MovimentTypeListener {
+
+    private var movimentType: MovimentType? = null
 
     private val storage by lazy { FinancasStorage(this) }
 
@@ -32,6 +35,12 @@ class MainActivity : AppCompatActivity() {
                 BalanceActivity.REQ_CODE
             )
         }
+        editType.setOnClickListener {
+            MovimentTypeDialog.newInstance().apply {
+                listener = this@MainActivity
+                show(supportFragmentManager, MovimentTypeDialog.TAG)
+            }
+        }
     }
 
     private fun save() {
@@ -41,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             MovimentEntity(
                 editName.getValue(),
                 editDescription.getValue(),
-                getMovimentType(),
+                movimentType!!,
                 getTypedValue()
             ).apply {
                 storage.addMovimento(this)
@@ -51,12 +60,6 @@ class MainActivity : AppCompatActivity() {
         clear()
     }
 
-    private fun getMovimentType(): MovimentType = when (editType.getValue()) {
-        MovimentType.IN.name -> MovimentType.IN
-        MovimentType.OUT.name -> MovimentType.OUT
-        else -> MovimentType.OUT
-    }
-
     private fun getTypedValue(): Double = try {
         editValue.getValue().toDouble()
     } catch (exception: Exception) {
@@ -64,17 +67,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isValid(): Boolean = editName.isNotEmpty()
-            || editType.isNotEmpty()
-            || editObrigation.text.toString() == "IN"
-            || editObrigation.text.toString() == "OUT"
+            || movimentType != null
             || editValue.isNotEmpty()
 
     private fun clear() {
         editName.text.clear()
         editDescription.text.clear()
-        editType.text.clear()
+        editType.setText(R.string.insert_moviment_type)
         editValue.text.clear()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 BalanceActivity.REQ_CODE -> {
-                    val moviment = data?.getSerializableExtra(BalanceActivity.RESULT_DATA) as MovimentEntity
+                    val moviment =
+                        data?.getSerializableExtra(BalanceActivity.RESULT_DATA) as MovimentEntity
                     editName.setText(moviment.name)
                     editDescription.setText(moviment.description)
                     editType.setText(moviment.type.name)
@@ -91,4 +92,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onMovimentSelected(movimentType: MovimentType) {
+        this.movimentType = movimentType
+        editType.text = movimentType.value
+    }
+
 }
