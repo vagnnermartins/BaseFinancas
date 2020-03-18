@@ -30,11 +30,15 @@ class BalanceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        // Buscar Movimentos Salvos no Banco de Dados
         storage.getMoviments()?.let {
             balance.text = storage.getMoviments()?.getResume()
+            //Havendo Movimento Salvos irá preencher o nosso RecyclerView (Lista de Movimentos)
             balances.apply {
                 layoutManager = LinearLayoutManager(this@BalanceActivity)
+                // Criamos o Adapter para preencher nosso RecyclerView
                 adapter = BalanceAdapter(it) {
+                    // Parte responsável por obter o item a qual foi clicado no RecyclerView
                     val result = Intent()
                     result.putExtra(RESULT_DATA, it)
                     setResult(Activity.RESULT_OK, result)

@@ -28,6 +28,7 @@ class MovimentTypeAdapter(
         val image: AppCompatImageView = view.findViewById(R.id.image)
         val text: AppCompatTextView = view.findViewById(R.id.text)
 
+        //Responsável por preencher os valores de cada item do RecyclerView
         fun bind(item: MovimentType){
             image.setImageResource(item.image)
             text.text = item.value

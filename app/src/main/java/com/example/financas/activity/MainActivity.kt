@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), MovimentTypeDialog.MovimentTypeListene
             )
         }
         editType.setOnClickListener {
+            // Responsável por abrir o menu no estilo BottomSheetDialog
             MovimentTypeDialog.newInstance().apply {
                 listener = this@MainActivity
                 show(supportFragmentManager, MovimentTypeDialog.TAG)
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), MovimentTypeDialog.MovimentTypeListene
         editValue.text.clear()
     }
 
+    //Responsável por verificar de onde a Activity está retornando
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {

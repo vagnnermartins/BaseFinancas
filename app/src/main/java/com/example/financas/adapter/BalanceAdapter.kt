@@ -32,6 +32,7 @@ class BalanceAdapter(
         private val value: AppCompatTextView = itemView.findViewById(R.id.value)
         private val viewType: View = itemView.findViewById(R.id.viewType)
 
+        //Responsável por preencher os valores de cada item do RecyclerView
         fun bind(item: MovimentEntity){
             name.text = item.name
             description.text = item.description
