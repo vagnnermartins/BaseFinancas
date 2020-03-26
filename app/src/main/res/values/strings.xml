@@ -24,4 +24,8 @@
     <string name="ver_balanco">Ver Balanço</string>
     <string name="balanco">Balanço:</string>
     <string name="insert_moviment_type">Clique para selecionar</string>
+    <string name="sort_value_asc">Valor Menor</string>
+    <string name="sort_value_desc">Valor Maior</string>
+    <string name="sort_date_asc">Primeiras Lançamentos</string>
+    <string name="sort_date_des">Últimos Lançamentos</string>
 </resources>

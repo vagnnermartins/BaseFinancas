@@ -10,6 +10,7 @@ import com.example.financas.R
 import com.example.financas.entity.MovimentEntity
 import com.example.financas.enums.MovimentType
 import com.example.financas.extensions.getFormattedCurrency
+import com.example.financas.extensions.toDateFormat
 
 class BalanceAdapter(
     private val items: List<MovimentEntity>,
@@ -17,7 +18,13 @@ class BalanceAdapter(
 ) : RecyclerView.Adapter<BalanceAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_balance, parent, false))
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_balance,
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = items.size
 
@@ -30,17 +37,30 @@ class BalanceAdapter(
         private val name: AppCompatTextView = itemView.findViewById(R.id.name)
         private val description: AppCompatTextView = itemView.findViewById(R.id.description)
         private val value: AppCompatTextView = itemView.findViewById(R.id.value)
+        private val date: AppCompatTextView = itemView.findViewById(R.id.date)
         private val viewType: View = itemView.findViewById(R.id.viewType)
 
         //Responsável por preencher os valores de cada item do RecyclerView
-        fun bind(item: MovimentEntity){
+        fun bind(item: MovimentEntity) {
             name.text = item.name
             description.text = item.description
             value.text = item.value.getFormattedCurrency()
 
-            when(item.type){
-                MovimentType.IN -> viewType.setBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.holo_green_dark))
-                MovimentType.OUT -> viewType.setBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.holo_red_dark))
+            date.text = item.date.toDateFormat()
+
+            when (item.type) {
+                MovimentType.IN -> viewType.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        android.R.color.holo_green_dark
+                    )
+                )
+                MovimentType.OUT -> viewType.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        android.R.color.holo_red_dark
+                    )
+                )
             }
 
             itemView.setOnClickListener { listen.invoke(item) }
