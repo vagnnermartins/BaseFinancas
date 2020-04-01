@@ -34,9 +34,6 @@ class SplashActivity : AppCompatActivity(),View.OnClickListener  {
         }else {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-
-            //impede que ao clicar no botão para voltar, o usuário volte a SpashActivity
-            //finish()
         }
     }
 }

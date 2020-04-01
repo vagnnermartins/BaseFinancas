@@ -1,4 +1,4 @@
-package com.example.financas.activity
+package com.example.financas.balance
 
 import android.app.Activity
 import android.content.Context
@@ -7,19 +7,23 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financas.R
 import com.example.financas.adapter.BalanceAdapter
 import com.example.financas.entity.MovimentEntity
 import com.example.financas.extensions.getResume
-import com.example.financas.storage.FinancasStorage
 import kotlinx.android.synthetic.main.activity_balance.*
 
 class BalanceActivity : AppCompatActivity() {
 
-    private val storage: FinancasStorage by lazy { FinancasStorage(this) }
-
-    private lateinit var data: MutableList<MovimentEntity>
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            BalanceViewModelFactory(application)
+        ).get(BalanceViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +38,23 @@ class BalanceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        data = storage.getMoviments()!!
-        fillData()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        // Iniciando todos os nossos Observers
+        // Observers são escultadores de nossos Live Datas configurados no nosso ViewModel
+        viewModel.data.observe(this, Observer { value -> fillData(value) })
+        viewModel.sortTypeData.observe(this, Observer { value -> fillData(sortType = value) })
     }
 
     // Buscar Movimentos Salvos no Banco de Dados
-    private fun fillData(sortType: SortBalanceType = SortBalanceType.DATE_DESC) =
-        sortData(sortType)?.let {
-            balance.text = storage.getMoviments()?.getResume()
+    private fun fillData(
+        data: List<MovimentEntity>? = viewModel.data.value,
+        sortType: SortBalanceType = viewModel.sortTypeData.value ?: SortBalanceType.DATE_ASC
+    ) =
+        sortData(data, sortType)?.let {
+            balance.text = it.getResume()
             //Havendo Movimento Salvos irá preencher o nosso RecyclerView (Lista de Movimentos)
             balances.apply {
                 layoutManager = LinearLayoutManager(this@BalanceActivity)
@@ -64,10 +77,10 @@ class BalanceActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.sort_value_asc -> fillData(SortBalanceType.VALUE_ASC)
-            R.id.sort_value_desc -> fillData(SortBalanceType.VALUE_DESC)
-            R.id.sort_date_asc -> fillData(SortBalanceType.DATE_ASC)
-            R.id.sort_date_desc -> fillData(SortBalanceType.DATE_DESC)
+            R.id.sort_value_asc -> viewModel.onSortSelected(SortBalanceType.VALUE_ASC)
+            R.id.sort_value_desc -> viewModel.onSortSelected(SortBalanceType.VALUE_DESC)
+            R.id.sort_date_asc -> viewModel.onSortSelected(SortBalanceType.DATE_ASC)
+            R.id.sort_date_desc -> viewModel.onSortSelected(SortBalanceType.DATE_DESC)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -75,12 +88,16 @@ class BalanceActivity : AppCompatActivity() {
     /**
      * Método onde fazemos ordenação de acordo com o tipo de ordenação
      */
-    private fun sortData(sortType: SortBalanceType): List<MovimentEntity>? {
+    private fun sortData(
+        data: List<MovimentEntity>?,
+        sortType: SortBalanceType
+    ): List<MovimentEntity>? {
+        //TODO Passar o sortData para o ViewModel
         return when (sortType) {
-            SortBalanceType.DATE_ASC -> data.sortedBy { it.date }
-            SortBalanceType.DATE_DESC -> data.sortedBy { -it.date }
-            SortBalanceType.VALUE_ASC -> data.sortedBy { it.value }
-            SortBalanceType.VALUE_DESC -> data.sortedBy { -it.value }
+            SortBalanceType.DATE_ASC -> data?.sortedBy { it.date }
+            SortBalanceType.DATE_DESC -> data?.sortedBy { -it.date }
+            SortBalanceType.VALUE_ASC -> data?.sortedBy { it.value }
+            SortBalanceType.VALUE_DESC -> data?.sortedBy { -it.value }
         }
     }
 
@@ -98,13 +115,6 @@ class BalanceActivity : AppCompatActivity() {
         const val RESULT_DATA = "RESULT_DATA"
 
         fun newIntent(context: Context) = Intent(context, BalanceActivity::class.java)
-    }
-
-    enum class SortBalanceType {
-        DATE_ASC,
-        DATE_DESC,
-        VALUE_ASC,
-        VALUE_DESC
     }
 
 }
