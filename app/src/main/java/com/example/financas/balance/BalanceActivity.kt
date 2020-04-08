@@ -45,31 +45,26 @@ class BalanceActivity : AppCompatActivity() {
         // Iniciando todos os nossos Observers
         // Observers são escultadores de nossos Live Datas configurados no nosso ViewModel
         viewModel.data.observe(this, Observer { value -> fillData(value) })
-        viewModel.sortTypeData.observe(this, Observer { value -> fillData(sortType = value) })
     }
 
     // Buscar Movimentos Salvos no Banco de Dados
-    private fun fillData(
-        data: List<MovimentEntity>? = viewModel.data.value,
-        sortType: SortBalanceType = viewModel.sortTypeData.value ?: SortBalanceType.DATE_ASC
-    ) =
-        sortData(data, sortType)?.let {
-            balance.text = it.getResume()
-            //Havendo Movimento Salvos irá preencher o nosso RecyclerView (Lista de Movimentos)
-            balances.apply {
-                layoutManager = LinearLayoutManager(this@BalanceActivity)
-                // Criamos o Adapter para preencher nosso RecyclerView
-                adapter = BalanceAdapter(it) {
-                    // Parte responsável por obter o item a qual foi clicado no RecyclerView
-                    val result = Intent()
-                    result.putExtra(RESULT_DATA, it)
-                    setResult(Activity.RESULT_OK, result)
-                    finish()
-                }
+    private fun fillData(data: List<MovimentEntity>?) = data?.let {
+        balance.text = it.getResume()
+        //Havendo Movimento Salvos irá preencher o nosso RecyclerView (Lista de Movimentos)
+        balances.apply {
+            layoutManager = LinearLayoutManager(this@BalanceActivity)
+            // Criamos o Adapter para preencher nosso RecyclerView
+            adapter = BalanceAdapter(it) {
+                // Parte responsável por obter o item a qual foi clicado no RecyclerView
+                val result = Intent()
+                result.putExtra(RESULT_DATA, it)
+                setResult(Activity.RESULT_OK, result)
+                finish()
             }
-        } ?: run {
-            //TODO EXIBIR MENSAGEM DE SEM MOVIMENTOS
         }
+    } ?: run {
+        //TODO EXIBIR MENSAGEM DE SEM MOVIMENTOS
+    }
 
     /**
      * Método Responsável por capturar o click dos itens de Menu
@@ -83,22 +78,6 @@ class BalanceActivity : AppCompatActivity() {
             R.id.sort_date_desc -> viewModel.onSortSelected(SortBalanceType.DATE_DESC)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * Método onde fazemos ordenação de acordo com o tipo de ordenação
-     */
-    private fun sortData(
-        data: List<MovimentEntity>?,
-        sortType: SortBalanceType
-    ): List<MovimentEntity>? {
-        //TODO Passar o sortData para o ViewModel
-        return when (sortType) {
-            SortBalanceType.DATE_ASC -> data?.sortedBy { it.date }
-            SortBalanceType.DATE_DESC -> data?.sortedBy { -it.date }
-            SortBalanceType.VALUE_ASC -> data?.sortedBy { it.value }
-            SortBalanceType.VALUE_DESC -> data?.sortedBy { -it.value }
-        }
     }
 
     /**
